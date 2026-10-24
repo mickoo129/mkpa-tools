@@ -6,7 +6,7 @@
   const $ = (id) => document.getElementById(id);
 
   const DEFAULTS = { g: 'M', a: 30, p: 'supreme', o: 'advance-8000', s: 45, e: 85, br: 0.1, pr: 6, py: 5, inf: 0, m: 'annual', tax: '0', levy: 0, fm: 'plan', calc: 'need', ms: 2000 };
-  const COLORS = { premium: '#b3261e', prep: '#9aa3b2', table: '#16213a', bank: '#2459c9', plan: '#c26a06' };
+  const COLORS = { premium: '#b3261e', prep: '#9aa3b2', table: '#1D2B2A', bank: '#2459c9', plan: '#c26a06' };
 
   // ---------- 格式 ----------
   const nf = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 });
@@ -938,7 +938,6 @@
 
   // ---------- 開始 ----------
   function init() {
-    $('year').textContent = new Date().getFullYear();
     $('dataInfo').textContent = `${Object.values(DATA.products).map((p) => `${p.short.split('（')[0]} ${dateZh(p.effective)}`).join('、')} 生效版本`;
     fillProducts();
     bind();
