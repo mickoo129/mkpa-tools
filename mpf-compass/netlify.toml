@@ -1,0 +1,10 @@
+# 積金羅盤 — Netlify
+# Netlify sets NETLIFY=true during CI, so the Nitro preset switches to
+# `netlify` (SSR + Functions for the live Yahoo index endpoints).
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
