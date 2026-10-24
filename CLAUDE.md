@@ -34,26 +34,73 @@ Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-dire
 7. **唔好放任何密碼、API key 落 repo**（呢個 repo 係公開嘅）。
 8. **Commit message** 開頭寫 folder 名，例如 `vhis-rate: 修正保費計算`。
 
-## 設計規格
+## 設計規格（MKPA 統一標準）
 
-**統一標準：未定。** 而家每個工具各有自己嘅配色同字體，喺決定統一標準之前，改工具時跟返該工具現有嘅風格，唔好自行引入新配色。
+所有工具必須跟以下標準。每個工具可以保留自己嘅 CSS 變數名，但數值要對應呢套。
 
-現有配色參考：
+### 配色
 
-| 工具 | 主色 | 背景 | 文字 |
-|---|---|---|---|
-| bankrate | `#1565c0` | `#f2f5f8` | `#0f1d2c` |
-| claimsreport | `#b5502a` | `#f6f4ef` | `#14213d` |
-| mpf-compass | `#1a7a96` | — | — |
-| public-rental-housing | `#00a758` | `#f7f9f8` | `#1d1d1f` |
-| vhis-rate | `#0e5e57` | `#f4f2ec` | `#16213a` |
-| ci-promotion | — | — | `#1D2B2A` |
-| hk-medical-insurance-compare | — | — | `#16262B` |
+| 用途 | 變數（建議名） | 色碼 |
+|---|---|---|
+| 主色：主要按鈕、重點、色帶、圖表主系列 | `--mk-brand` | `#00A758`（宏利綠） |
+| 綠色文字、連結、按鈕 hover | `--mk-brand-ink` | `#00753E` |
+| 淺綠底（提示框、選中狀態） | `--mk-brand-soft` | `#E6F6EE` |
+| 深色：頁頭底色、大標題 | `--mk-deep` | `#0E5E57`（深青綠） |
+| 內文文字 | `--mk-ink` | `#1D2B2A` |
+| 次要文字 | `--mk-muted` | `#5B6B6A` |
+| 頁面背景 | `--mk-bg` | `#F6F9F8` |
+| 卡片／面板 | `--mk-surface` | `#FFFFFF` |
+| 分隔線、邊框 | `--mk-line` | `#E3E9E7` |
+| 警示（琥珀） | `--mk-warn` / `--mk-warn-soft` | `#8A5B00` / `#FFF5DC` |
+| 錯誤、下跌（紅） | `--mk-danger` / `--mk-danger-soft` | `#C62828` / `#FDECEC` |
+
+- 白底上嘅綠色**文字**一律用 `#00753E`（`#00A758` 喺白底對比度唔夠）。
+- 主要按鈕：`#00A758` 底、白色粗體字；hover 轉 `#00753E`。
+- 圖表需要多個分類顏色時可以加其他顏色，但主系列用宏利綠。
+- **唔做深色模式**，唔好加 `prefers-color-scheme: dark`。
+
+### 字體
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Noto+Sans+HK:wght@400;500;700;900&display=swap" rel="stylesheet">
+```
+
+- 內文、標題：`"Noto Sans HK", "PingFang HK", "Microsoft JhengHei", system-ui, sans-serif`
+- 大數字、金額、百分比：`"Barlow", "Noto Sans HK", system-ui, sans-serif`
+- 唔用襯線字體（Serif）。
+
+### 頁尾（每個工具一樣）
+
+由上至下：工具專屬免責聲明 → 資料來源（如有）→ 電子名片 → 版權。
+
+```html
+<footer class="mk-footer">
+  <!-- 工具專屬免責聲明、資料來源放呢度 -->
+  <p class="mk-contact">想進一步了解或有疑問？
+    <a href="https://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&amp;r=adviser" target="_blank" rel="noopener">查看電子名片 →</a>
+    <span>可直接 WhatsApp、加 IG 或儲存聯絡資料</span>
+  </p>
+  <p class="mk-copy">© <span class="mk-year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p>
+</footer>
+<script>document.querySelectorAll('.mk-year').forEach(e=>e.textContent=new Date().getFullYear());</script>
+```
+
+- **聯絡資料只用電子名片連結**，唔好喺工具顯示電話、WhatsApp 號碼、電郵、牌照號碼，亦唔好加顧問資料輸入欄。
+- 「分享去 WhatsApp」呢類分享功能可以保留，佢唔係聯絡資料。
+
+### 列印／存 PDF（每個工具都要有）
+
+- 按鈕文字統一：**「列印 / 存 PDF」**，用 `window.print()`。
+- 紙張 A4；直向或橫向按內容決定（闊表格用橫向）。
+- 列印時：隱藏導覽、按鈕、輸入提示等互動元素；保留顏色（`print-color-adjust: exact`）；卡片、表格行唔好斷頁（`break-inside: avoid`）。
+- 列印版頂部顯示工具名稱同列印日期，底部顯示電子名片連結同版權行（PDF 入面條連結撳得到）。
 
 ## 新增工具
 
 1. 開新 folder（英文細楷加連字號，例如 `price-calculator`）。
-2. 寫 `index.html`，跟上面規則。
+2. 寫 `index.html`，跟上面規則同設計規格（配色、字體、頁尾、列印）。
 3. 複製任何一個純前端工具嘅 `netlify.toml`（只有 `ignore` 嗰行）放入新 folder。
 4. 喺上面「工具一覽」加一行。
 5. 喺 Netlify 新增 site，揀呢個 repo，Base directory 填該 folder 名。
