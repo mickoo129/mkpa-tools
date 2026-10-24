@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>七年理賠數據解讀 2019–2025 | MKPA</title>
+  <meta name="description" content="用 2019–2025 年個人保險賠償報告，按醫療、危疾、人壽、意外四類，睇清楚錢賠咗去邊、男女分別、咩病最多人 claim，同醫療費用升咗幾多。" />
+  <meta property="og:title" content="七年理賠數據解讀 2019–2025 | MKPA" />
+  <meta property="og:description" content="七年賠償由 33 億升到 59 億：住院佔近六成、危疾三分二係女性、手術費同病房費持續上升。" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#14213d" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="topnav" id="topnav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top"><img class="brand-icon" src="favicon.svg" alt="" width="32" height="32" /><span>理賠數據解讀</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#overview" data-cat="all"><i></i>總覽</a>
+      <a href="#medical" data-cat="hospital"><i></i>醫療</a>
+      <a href="#critical" data-cat="critical"><i></i>危疾</a>
+      <a href="#life" data-cat="death"><i></i>人壽</a>
+      <a href="#accident" data-cat="accident"><i></i>意外</a>
+      <a href="#check" data-cat="check"><i></i>保障檢查</a>
+    </div>
+    <a class="print-btn" href="print.html">A4 列印版</a>
+  </div>
+  <div class="now-bar" id="nowBar"><div class="wrap"><span id="nowText"></span></div></div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">個人保險賠償報告 · 2019–2025 · 香港及澳門保單</p>
+    <h1>七年理賠數據，<br class="br-sm" />睇清楚錢賠咗去邊</h1>
+    <p class="lead">七份年度理賠報告逐個數字整理好，按<b>醫療、危疾、人壽、意外</b>四類分開講：邊類最多人用、男女有咩分別、幾多歲最易出事，同埋醫療費每年升幾多。</p>
+    <div class="punch" id="punch"></div>
+    <div class="perday" id="perDay"></div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Part 1: Overview -->
+  <section class="chapter" id="overview" data-cat="all">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 1 部分 · 四類一齊睇</span>
+        <h2>總覽：四類保險邊類 claim 得最多？</h2>
+        <p class="ch-desc">先比較醫療、危疾、人壽、意外四類嘅賠款同宗數，之後每一類再分開詳細講。</p>
+        <div class="ch-pick" id="chPick"></div>
+      </div>
+    </div>
+    <div class="wrap ch-body">
+      <h3 class="sub-title"><span>1.1</span>七年走勢：賠款差唔多翻倍</h3>
+      <div class="kf" id="kf-trend"></div>
+      <div class="card">
+        <div class="seg" role="tablist" aria-label="走勢圖顯示方式">
+          <button class="on" data-trend="amount" type="button">每年金額（億）</button>
+          <button data-trend="index" type="button">升咗幾多（對比 2019）</button>
+        </div>
+        <div class="chart-box tall"><canvas id="trendChart" aria-label="2019 至 2025 年四類賠償金額"></canvas></div>
+        <p class="chart-note" id="trendNote"></p>
+        <details class="table-toggle">
+          <summary>睇數字表</summary>
+          <div class="table-scroll" id="trendTable"></div>
+        </details>
+      </div>
+
+      <h3 class="sub-title"><span>1.2</span>咩 claim 得最多？</h3>
+      <div class="kf" id="kf-mix"></div>
+      <div class="card">
+        <h4 class="card-h">每類每年成功獲賠宗數（2019–2025）</h4>
+        <div class="multiples" id="countMultiples"></div>
+        <p class="chart-note">四個圖各自有刻度，方便睇每類嘅升勢；住院宗數比身故、危疾多幾十倍。2019–2021 年身故及危疾以「保單」計，2022 年起以「個案」計。數字為報告「超過／接近」數。</p>
+      </div>
+      <div class="year-pick mt" data-scope="summary"></div>
+      <div class="grid-2">
+        <div class="card">
+          <h4 class="card-h">宗數佔比 vs 金額佔比</h4>
+          <div class="share-rows" id="shareRows"></div>
+        </div>
+        <div class="card">
+          <h4 class="card-h">每類平均每宗賠幾多</h4>
+          <div id="perCase"></div>
+          <p class="chart-note">住院、意外係「總額 ÷ 成功宗數」推算；身故、危疾用報告公布嘅平均賠償額。</p>
+        </div>
+      </div>
+      <div class="card mt">
+        <h4 class="card-h">每 100 宗申請，有幾多宗獲賠？</h4>
+        <div id="rateBars"></div>
+        <p class="chart-note">2024 年數字（2025 年報告只公布整體約 93%）。大部分申請都獲賠；危疾相對低，因為要符合指定嘅疾病定義。一般唔獲賠嘅情況包括：病況未達保障定義、仲喺等候期內、投保前已有病況而冇申報（報告本身冇列出原因）。所以投保時如實申報、清楚保障定義好重要。</p>
+        <details class="table-toggle">
+          <summary>睇七年走勢</summary>
+          <div class="chart-box"><canvas id="rateChart" aria-label="各類成功索償率"></canvas></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Part 2: Medical -->
+  <section class="chapter" id="medical" data-cat="hospital">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 2 部分 · 醫療／住院保險</span>
+        <h2>醫療：claim 得最多、用得最密</h2>
+        <p class="ch-desc">住院、手術、醫生費嘅賠償。以下所有數字都係講<b>醫療／住院</b>。</p>
+        <div class="ch-stats" id="chStats-hospital"></div>
+      </div>
+    </div>
+    <div class="wrap ch-body" id="body-hospital"></div>
+  </section>
+
+  <!-- Part 3: Critical illness -->
+  <section class="chapter" id="critical" data-cat="critical">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 3 部分 · 危疾保險</span>
+        <h2>危疾：一確診就一筆過賠</h2>
+        <p class="ch-desc">癌症、心臟病、中風等指定疾病嘅賠償。以下所有數字都係講<b>危疾</b>。</p>
+        <div class="ch-stats" id="chStats-critical"></div>
+      </div>
+    </div>
+    <div class="wrap ch-body" id="body-critical"></div>
+  </section>
+
+  <!-- Part 4: Life -->
+  <section class="chapter" id="life" data-cat="death">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 4 部分 · 人壽保險（身故賠償）</span>
+        <h2>人壽：留俾屋企人嘅一筆錢</h2>
+        <p class="ch-desc">受保人身故後賠俾家人嘅錢。以下所有數字都係講<b>人壽／身故</b>。</p>
+        <div class="ch-stats" id="chStats-death"></div>
+      </div>
+    </div>
+    <div class="wrap ch-body" id="body-death"></div>
+  </section>
+
+  <!-- Part 5: Accident -->
+  <section class="chapter" id="accident" data-cat="accident">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 5 部分 · 意外保險</span>
+        <h2>意外：宗數多、每宗細</h2>
+        <p class="ch-desc">意外受傷嘅醫療同賠償。以下所有數字都係講<b>意外</b>。</p>
+        <div class="ch-stats" id="chStats-accident"></div>
+      </div>
+    </div>
+    <div class="wrap ch-body" id="body-accident"></div>
+  </section>
+
+  <!-- Part 6: Check -->
+  <section class="chapter" id="check" data-cat="check">
+    <div class="ch-banner">
+      <div class="wrap">
+        <span class="ch-no">第 6 部分 · 檢視自己</span>
+        <h2>你嘅保障夠唔夠？</h2>
+        <p class="ch-desc">輸入你嘅情況，即刻對照上面嘅理賠數字。所有計算只喺你部機做，唔會傳送。</p>
+      </div>
+    </div>
+    <div class="wrap ch-body">
+      <div class="card">
+        <div class="form-grid">
+          <label class="field"><span>每月家庭開支</span><input id="inExpense" type="number" inputmode="numeric" min="0" step="1000" value="30000" /></label>
+          <label class="field"><span>需要照顧家人幾多年</span><input id="inYears" type="number" inputmode="numeric" min="0" step="1" value="10" /></label>
+          <label class="field"><span>按揭／債務餘額</span><input id="inDebt" type="number" inputmode="numeric" min="0" step="50000" value="2000000" /></label>
+          <label class="field"><span>現有儲蓄（可動用）</span><input id="inSaving" type="number" inputmode="numeric" min="0" step="50000" value="300000" /></label>
+          <label class="field"><span>現有人壽保額</span><input id="inLife" type="number" inputmode="numeric" min="0" step="50000" value="1000000" /></label>
+          <label class="field"><span>年收入</span><input id="inIncome" type="number" inputmode="numeric" min="0" step="10000" value="480000" /></label>
+          <label class="field"><span>現有危疾保額</span><input id="inCi" type="number" inputmode="numeric" min="0" step="50000" value="500000" /></label>
+          <label class="field"><span>醫療保障</span>
+            <select id="inMedType">
+              <option value="none">冇個人醫保</option>
+              <option value="limit" selected>有，每年限額</option>
+              <option value="full">有，全數賠償／高端</option>
+            </select>
+          </label>
+          <label class="field" id="medLimitField"><span>醫療每年限額</span><input id="inMed" type="number" inputmode="numeric" min="0" step="50000" value="300000" /></label>
+        </div>
+        <div class="check-grid" id="checkResults"></div>
+        <p class="disclaimer">以上只係 MKPA 用作講解嘅簡化估算（人壽：家庭開支 × 年數 ＋ 債務 − 儲蓄；危疾：年收入 3–5 倍作為停工及治療緩衝），並非保險公司官方建議，亦唔構成任何產品要約。實際需要請同顧問詳細分析。</p>
+      </div>
+
+      <h3 class="sub-title"><span>6.2</span>同顧問傾之前，問自己 5 條問題</h3>
+      <ol class="questions" id="questions"></ol>
+      <div class="glossary card">
+        <h4 class="card-h">名詞解釋</h4>
+        <dl>
+          <dt>成功索償率</dt><dd>已處理嘅申請之中，有幾多成獲批賠償。</dd>
+          <dt>保單／個案</dt><dd>2019–2021 年報告以「保單」計，2022 年起改以「個案」計，所以前後宗數唔完全同一口徑。</dd>
+          <dt>平均數 vs 分佈</dt><dd>平均數會被大量細額個案拉低，睇「賠償額分佈」先知大額個案有幾多。</dd>
+          <dt>四類合計 vs 總額</dt><dd>報告總額以「超過」表述，所以四類加埋會比公布總額略高。</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" id="sources">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <strong>Michael Koo Protection Alliance（MKPA）</strong>
+        <p>本頁由 MKPA 整理，用作同客戶講解理賠數據，唔構成任何產品要約、建議或游說。所有數字只供參考。</p>
+      </div>
+      <div id="contactBox"></div>
+    </div>
+    <h4>資料來源</h4>
+    <ol class="sources" id="sourceList"></ol>
+    <p class="foot-meta" id="footMeta"></p>
+    <p class="copyright" id="copyright">© 2026 Michael Koo Protection Alliance (MKPA). 版權所有。</p>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

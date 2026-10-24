@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>理賠數據解讀 A4 列印版 | MKPA</title>
+  <meta name="description" content="2019–2025 年個人保險賠償數據解讀，A4 列印版。" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="print.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="toolbar">
+    <a href="index.html">← 返回網頁版</a>
+    <button type="button" id="doPrint">列印／儲存 PDF</button>
+    <span class="hint">A4 直度 · 共 8 頁 · 建議勾選「背景圖形」</span>
+  </div>
+  <div id="pages"></div>
+  <script src="data.js"></script>
+  <script src="print.js"></script>
+</body>
+</html>

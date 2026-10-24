@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>定存息口通｜香港銀行定期息口比較</title>
+<meta name="description" content="自動更新香港 20 多間銀行及虛擬銀行港元、美元、人民幣、澳元、英鎊、日圓定期存款息口比較表，附優惠條件、到期日、息口走勢及匯價比較。">
+<meta name="theme-color" content="#0b2545">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b2545'/%3E%3Cpath d='M8 22 L14 15 L18 19 L24 10' stroke='%2334d399' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Noto+Sans+HK:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./"><span class="mark" aria-hidden="true"></span>定存息口通</a>
+    <p class="updated" id="updated">讀取中…</p>
+  </div>
+  <nav class="wrap tabs" role="tablist" aria-label="功能">
+    <button role="tab" aria-selected="true" data-tab="rates">定期比較</button>
+    <button role="tab" aria-selected="false" data-tab="fx">匯價比較</button>
+    <button role="tab" aria-selected="false" data-tab="fxtd">外幣定期計算</button>
+    <button role="tab" aria-selected="false" data-tab="trend">息口走勢</button>
+  </nav>
+</header>
+
+<main class="wrap">
+  <!-- 定期比較 -->
+  <section id="tab-rates" class="panel" role="tabpanel">
+    <div class="title-row">
+      <h1>定期存款息口比較</h1>
+      <button class="btn" id="share" type="button">複製分享連結</button>
+    </div>
+
+    <div class="filters card">
+      <div class="f-row">
+        <div class="seg" id="ccy" role="radiogroup" aria-label="貨幣"></div>
+        <label class="field">
+          <span>存款金額</span>
+          <span class="input"><b id="amt-ccy">HKD</b><input id="amount" inputmode="numeric" value="100,000" aria-label="存款金額"></span>
+        </label>
+      </div>
+      <div class="me-row">
+        <p class="me-summary" id="meSummary"></p>
+        <div class="me-actions">
+          <button class="btn" id="meBtn" type="button" aria-expanded="false" aria-controls="mePanel">設定我嘅情況</button>
+          <button class="btn" id="pickerBtn" type="button" aria-expanded="false" aria-controls="picker">揀銀行</button>
+        </div>
+      </div>
+
+      <div class="sheet" id="mePanel" hidden>
+        <div class="q">
+          <h3>1. 你筆錢而家喺邊間銀行？</h3>
+          <p class="q-help">好多優惠只限「由其他銀行轉過嚟」嘅錢。揀咗之後，存返同一間銀行就唔會計呢類優惠。</p>
+          <span class="input"><select id="homeBank" aria-label="筆錢而家喺邊間銀行"></select></span>
+        </div>
+        <div class="q">
+          <h3>2. 你喺邊幾間銀行已經有戶口？</h3>
+          <p class="q-help">有戶口嘅銀行唔會計「只限新客戶」嘅優惠。可以揀多間，冇就唔使揀。</p>
+          <div class="chips" id="accChips"></div>
+        </div>
+        <div class="q">
+          <h3>3. 你喺邊間係高級理財客戶？</h3>
+          <p class="q-help">例如滙豐卓越理財、恒生優越理財、中銀「中銀理財」、渣打優先理財。通常要有幾十萬至一百萬以上資產先係。唔肯定就唔使揀。</p>
+          <div class="chips" id="premChips"></div>
+        </div>
+        <div class="sheet-foot">
+          <button class="btn" type="button" id="meReset">清除設定</button>
+          <button class="btn primary" type="button" id="meDone">完成</button>
+        </div>
+      </div>
+
+      <div class="sheet" id="picker" hidden>
+        <div class="q">
+          <h3>只比較以下銀行</h3>
+          <div class="picker-actions">
+            <button class="btn" type="button" data-preset="all">全部</button>
+            <button class="btn" type="button" data-preset="major">只睇大型銀行</button>
+            <button class="btn" type="button" data-preset="virtual">只睇虛擬銀行</button>
+            <button class="btn" type="button" data-preset="none">清除</button>
+          </div>
+          <div class="picker-groups" id="pickerList"></div>
+        </div>
+        <div class="sheet-foot"><button class="btn primary" type="button" id="pickerDone">完成</button></div>
+      </div>
+    </div>
+
+    <div class="seg tenor-seg" id="tenorSeg" role="radiogroup" aria-label="存期"></div>
+    <p class="caption" id="caption"></p>
+    <div class="table-wrap card wide-only">
+      <table class="cmp" id="cmp"><thead></thead><tbody></tbody></table>
+    </div>
+    <ol class="ranklist card narrow-only" id="rank"></ol>
+    <p class="nodata-note" id="noDataNote"></p>
+    <p class="legend-line">
+      <span class="lg best">每個存期最高</span>
+      <span class="lg"><span class="kind promo">優惠</span>推廣息口，通常有限期同條件</span>
+      <span class="lg"><span class="kind board">牌價</span>銀行標準息口，長期適用</span>
+      <span class="lg"><i class="dot-cond"></i>有條件，撳入去睇</span>
+    </p>
+  </section>
+
+  <!-- 匯價比較 -->
+  <section id="tab-fx" class="panel" role="tabpanel" hidden>
+    <div class="title-row"><h1>銀行電匯牌價比較</h1></div>
+    <div class="filters card">
+      <div class="f-row">
+        <label class="field"><span>我有</span><span class="input"><select id="fxFrom" aria-label="原本貨幣"></select><input id="fxAmt" inputmode="decimal" value="10,000" aria-label="金額"></span></label>
+        <button class="btn icon" id="fxSwap" type="button" aria-label="對調貨幣">⇄</button>
+        <label class="field"><span>換成</span><span class="input"><select id="fxTo" aria-label="目標貨幣"></select></span></label>
+      </div>
+    </div>
+    <p class="caption" id="fxMid"></p>
+    <div class="table-wrap card"><table class="cmp" id="fxTable"><thead></thead><tbody></tbody></table></div>
+    <p class="note fx-hint">手機只顯示換算結果；打橫或者用電腦睇，可以見到每種貨幣嘅買入同賣出價。</p>
+    <p class="note">銀行價係公開電匯（TT）牌價，網上理財或指定時段可能有更好價。市場參考價每日更新，只作比較。</p>
+  </section>
+
+  <!-- 外幣定期計算 -->
+  <section id="tab-fxtd" class="panel" role="tabpanel" hidden>
+    <div class="title-row"><h1>外幣定期：放落去，到期攞返幾多港幣？</h1></div>
+    <div class="filters card">
+      <div class="f-row">
+        <label class="field"><span>港元本金</span><span class="input"><b>HKD</b><input id="tdAmt" inputmode="numeric" value="100,000" aria-label="港元本金"></span></label>
+        <div class="field"><span>換成</span><div class="seg" id="tdCcy" role="radiogroup" aria-label="外幣"></div></div>
+        <div class="field"><span>存期</span><div class="seg" id="tdTenor" role="radiogroup" aria-label="存期"></div></div>
+      </div>
+      <label class="check" id="tdMineWrap" hidden><input type="checkbox" id="tdMine"> 只睇我有戶口嘅銀行（喺定期比較頁「設定我嘅情況」揀）</label>
+    </div>
+    <p class="caption" id="tdBase"></p>
+    <ol class="ranklist card" id="tdList"></ol>
+    <p class="note">「到期攞返」假設到期時匯率同今日一樣，並已扣除銀行換錢差價（每間用自己公布嘅電匯價；未有資料嘅標「換錢價估算」）。息口按「我嘅情況」計。實際以銀行為準。</p>
+  </section>
+
+  <!-- 走勢 -->
+  <section id="tab-trend" class="panel" role="tabpanel" hidden>
+    <div class="title-row"><h1>港元定期息口走勢</h1></div>
+    <div class="filters card">
+      <div class="f-row">
+        <div class="field"><span>睇幾多年</span><div class="seg" id="tRange" role="radiogroup" aria-label="年期"></div></div>
+        <div class="field"><span>存期</span><div class="seg" id="tTenor" role="radiogroup" aria-label="存期"></div></div>
+      </div>
+    </div>
+    <div class="facts" id="trendFacts"></div>
+    <figure class="card chart" id="chart"></figure>
+    <p class="trend-sum" id="trendNote"></p>
+    <p class="red-note">註：灰線唔係定期息率。HIBOR 係銀行之間借錢嘅息口，銀行嘅定期優惠一般會跟佢上落：HIBOR 高，優惠息通常會高；HIBOR 跌，優惠息通常都會跌。不過過往實際優惠息係幾多，官方冇紀錄，所以呢度只可以顯示牌價同 HIBOR。</p>
+    <div class="card prose explain">
+      <p><b>藍線（銀行定期牌價）</b>係金管局每月統計嘅主要銀行港元定期<b>牌價</b>平均（10 萬以下存款），即係冇優惠時嘅標準定期息口。每一點代表一個月。</p>
+      <p><b>灰色虛線</b>係 HIBOR（香港銀行同業拆息），只作參考，唔係任何人做定期攞到嘅息率。</p>
+      <p>資料來源：<a href="https://apidocs.hkma.gov.hk/" target="_blank" rel="noopener">香港金融管理局開放數據</a>。過往息口唔代表將來。</p>
+    </div>
+  </section>
+
+  <!-- 資料來源 -->
+  <section id="tab-about" class="panel" role="tabpanel" hidden>
+    <div class="title-row"><h1>資料來源及更新狀態</h1></div>
+    <div class="card prose">
+      <p>系統每兩個鐘自動打開各銀行公開網頁，讀取定期存款息口表同電匯牌價，冇人手修改。讀唔到嘅銀行會標示，並繼續顯示最後一次成功讀到嘅數據同時間。</p>
+      <p>所有息口只供參考，以銀行公布為準。好多高息有條件，例如只限新客戶、新資金、指定理財級別、網上開立，或者要先經該銀行兌換外幣，而且優惠有限期。開戶前請細閱銀行原文條款。本網站唔提供任何投資建議。</p>
+      <p>香港持牌銀行嘅合資格存款受<a href="https://www.dps.org.hk/" target="_blank" rel="noopener">存款保障計劃</a>保障，每間銀行每位存款人上限 80 萬港元。</p>
+    </div>
+    <div class="table-wrap card"><table class="cmp status" id="statusTable">
+      <thead><tr><th>銀行</th><th>狀態</th><th>最後成功更新</th><th>來源網頁</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+  </section>
+</main>
+
+<footer class="foot wrap">
+  <p>息口只供參考，以銀行公布為準。持牌銀行存款受存款保障計劃保障，上限 80 萬港元。</p>
+  <p><a href="#about" data-go="about">資料來源及各銀行更新狀態</a></p>
+  <p class="copyright">© <span id="year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="app.js"></script>
+</body>
+</html>
