@@ -38,6 +38,11 @@ Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-dire
 
 所有工具必須跟以下標準。每個工具可以保留自己嘅 CSS 變數名，但數值要對應呢套。
 
+**標準檔案喺 `_standard/`**（唔會部署，只係範本）：
+- `_standard/mkpa.css`：配色變數、電子名片、列印按鈕、列印頁頭嘅樣式。複製入工具嘅 CSS。
+- `_standard/snippets.html`：字體連結、列印頁頭、列印按鈕、電子名片（連二維碼）、版權行、年份／列印日期 script。
+- 改標準時先改 `_standard/`，再同步到每個工具。React 工具（mpf-compass）用 `src/components/layout/mk-standard.tsx`。
+
 ### 配色
 
 | 用途 | 變數（建議名） | 色碼 |
@@ -57,7 +62,8 @@ Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-dire
 - 白底上嘅綠色**文字**一律用 `#00753E`（`#00A758` 喺白底對比度唔夠）。
 - 主要按鈕：`#00A758` 底、白色粗體字；hover 轉 `#00753E`。
 - 圖表需要多個分類顏色時可以加其他顏色，但主系列用宏利綠。
-- **唔做深色模式**，唔好加 `prefers-color-scheme: dark`。
+- **唔做深色模式**，唔好加 `prefers-color-scheme: dark` 或主題切換掣。
+- 例外：mpf-compass 整體用深青綠 `#0E5E57` 做頁面底色（白色卡片放上面），列印時自動轉白底黑字。
 
 ### 字體
 
