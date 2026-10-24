@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自願醫保保費規劃</title>
+  <meta name="description" content="宏利自願醫保：現時保費、將來保費、要儲幾多、遲儲嘅代價">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230a463f%27/%3E%3Cpath d=%27M13 8h6v5h5v6h-5v5h-6v-5H8v-6h5z%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <div>
+        <div class="eyebrow">MKPA · 醫療保障規劃</div>
+        <h1>自願醫保保費規劃</h1>
+      </div>
+      <div class="topbar__actions no-print">
+        <button type="button" class="btn btn--ghost" id="copyLink">複製連結</button>
+        <button type="button" class="btn btn--light" id="printBtn">列印 / 存 PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap layout">
+    <!-- 輸入 -->
+    <aside class="panel no-print" aria-label="輸入資料">
+      <a class="jump" href="#results">睇結果 ↓</a>
+      <section class="group">
+        <h2 class="group__title">受保人</h2>
+        <div class="field">
+          <span class="label">性別</span>
+          <div class="seg" role="radiogroup" id="genderSeg">
+            <button type="button" role="radio" data-value="M" aria-checked="true">男</button>
+            <button type="button" role="radio" data-value="F" aria-checked="false">女</button>
+          </div>
+        </div>
+        <label class="field">
+          <span class="label">現時年齡 <small>（最接近生日年齡）</small></span>
+          <select id="currentAge"></select>
+        </label>
+      </section>
+
+      <section class="group">
+        <h2 class="group__title">計劃</h2>
+        <label class="field">
+          <span class="label">產品</span>
+          <select id="product"></select>
+        </label>
+        <label class="field">
+          <span class="label">計劃選項</span>
+          <select id="option"></select>
+        </label>
+        <p class="hint" id="productHint"></p>
+      </section>
+
+      <section class="group">
+        <h2 class="group__title">儲蓄安排</h2>
+        <div class="field">
+          <span class="label">想計乜</span>
+          <div class="seg" role="radiogroup" id="calcSeg">
+            <button type="button" role="radio" data-value="need" aria-checked="true">要儲幾多</button>
+            <button type="button" role="radio" data-value="fixed" aria-checked="false">每月儲定數</button>
+          </div>
+        </div>
+        <div class="field" id="msWrap" hidden>
+          <span class="label">每月儲 <small>（港元）</small></span>
+          <div class="range-row range-row--num"><button type="button" class="step" data-for="monthlySaving" data-dir="-1" aria-label="減少">−</button><input type="number" id="monthlySaving" class="num-input" min="0" step="500" inputmode="numeric" value="2000"><button type="button" class="step" data-for="monthlySaving" data-dir="1" aria-label="增加">＋</button></div>
+          <p class="hint">計埋利息之後，睇吓夠交保費交到幾多歲。</p>
+        </div>
+        <div class="field">
+          <span class="label">主要展示方案 <small>（頂部同「遲儲嘅代價」用呢個）</small></span>
+          <div class="seg" role="radiogroup" id="focusSeg">
+            <button type="button" role="radio" data-value="plan" aria-checked="true">儲蓄計劃</button>
+            <button type="button" role="radio" data-value="bank" aria-checked="false">銀行儲蓄</button>
+          </div>
+        </div>
+        <div class="field">
+          <span class="label" id="ageRangeLabel">想用儲蓄交保費嘅年齡</span>
+          <div class="range-pair">
+            <label class="range-pair__item"><span class="range-pair__tag">由</span><select id="startAge" aria-label="由幾歲開始用儲蓄交保費"></select></label>
+            <span class="range-pair__dash" aria-hidden="true">至</span>
+            <label class="range-pair__item"><select id="endAge" aria-label="交到幾歲"></select></label>
+          </div>
+          <p class="hint" id="ageRangeHint">之前嘅保費照舊自己交，同時儲錢。儲蓄計劃要供滿供款年期先可以提取，未供滿之前到期嘅保費都係自己交。</p>
+        </div>
+        <div class="field">
+          <div class="label label--row"><span>銀行儲蓄利率</span><output id="bankRateOut" class="pill pill--bank"></output></div>
+          <div class="range-row"><button type="button" class="step" data-for="bankRate" data-dir="-1" aria-label="減少">−</button><input type="range" id="bankRate" min="0" max="8" step="0.1" value="0.1"><button type="button" class="step" data-for="bankRate" data-dir="1" aria-label="增加">＋</button></div>
+          <p class="hint">活期儲蓄一般約 0.1%；定期存款利率較高但要鎖定。</p>
+        </div>
+        <div class="field">
+          <div class="label label--row"><span>儲蓄計劃假設年回報</span><output id="planRateOut" class="pill pill--plan"></output></div>
+          <div class="range-row"><button type="button" class="step" data-for="planRate" data-dir="-1" aria-label="減少">−</button><input type="range" id="planRate" min="0" max="10" step="0.1" value="6"><button type="button" class="step" data-for="planRate" data-dir="1" aria-label="增加">＋</button></div>
+        </div>
+        <div class="field">
+          <div class="label label--row"><span>儲蓄計劃供款年期</span><output id="planYearsOut" class="pill pill--plan"></output></div>
+          <div class="range-row"><button type="button" class="step" data-for="planYears" data-dir="-1" aria-label="減少">−</button><input type="range" id="planYears" min="1" max="20" step="1" value="5"><button type="button" class="step" data-for="planYears" data-dir="1" aria-label="增加">＋</button></div>
+          <p class="hint">儲蓄保險一般要供滿供款期先可以提取，常見有 2、5、10 年；預設 5 年，按你介紹嘅產品改。</p>
+        </div>
+      </section>
+
+      <section class="group">
+        <h2 class="group__title">保費假設</h2>
+        <div class="field">
+          <div class="label label--row"><span>保費表每年額外加價 <small>（醫療通脹，喺年齡升幅之上）</small></span><output id="inflationOut" class="pill"></output></div>
+          <div class="range-row"><button type="button" class="step" data-for="inflation" data-dir="-1" aria-label="減少">−</button><input type="range" id="inflation" min="0" max="8" step="0.5" value="0"><button type="button" class="step" data-for="inflation" data-dir="1" aria-label="增加">＋</button></div>
+          <div class="combo" id="inflationCombo"></div>
+          <p class="hint">保費隨年齡上升嘅部分，保費表已經計咗。呢度係保險公司將成個保費表加價，建議用 0%–3%；0% 即係只按現行保費表。</p>
+        </div>
+        <div class="field">
+          <span class="label">繳費方式</span>
+          <div class="seg seg--4" role="radiogroup" id="modeSeg">
+            <button type="button" role="radio" data-value="annual" aria-checked="true">年繳</button>
+            <button type="button" role="radio" data-value="semi" aria-checked="false">半年</button>
+            <button type="button" role="radio" data-value="quarterly" aria-checked="false">季繳</button>
+            <button type="button" role="radio" data-value="monthly" aria-checked="false">月繳</button>
+          </div>
+        </div>
+        <label class="field">
+            <span class="label">扣稅 <small>（按邊際稅率）</small></span>
+            <select id="taxRate">
+              <option value="0" selected>唔計</option>
+              <option value="0.02">2%</option>
+              <option value="0.06">6%</option>
+              <option value="0.10">10%</option>
+              <option value="0.14">14%</option>
+              <option value="0.15">15%（標準稅率）</option>
+              <option value="0.16">16%（標準稅率）</option>
+              <option value="0.17">17%</option>
+            </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" id="levy">
+          <span>加上保費徵費（0.1%）</span>
+        </label>
+      </section>
+
+      <button type="button" class="btn btn--outline btn--block" id="resetBtn">重設</button>
+    </aside>
+
+    <!-- 結果 -->
+    <section class="results" id="results" aria-live="polite">
+      <div class="errors" id="errors" hidden></div>
+
+      <div id="resultBody">
+        <div class="print-only print-meta" id="printMeta"></div>
+        <div class="client-line" id="clientLine"></div>
+
+        <div class="kpis">
+          <a class="kpi" href="#secFuture">
+            <div class="kpi__q"><span class="num">1</span>現時保費</div>
+            <div class="kpi__v" id="kNow">—</div>
+            <div class="kpi__s" id="kNowSub"></div>
+          </a>
+          <a class="kpi" href="#secFuture">
+            <div class="kpi__q"><span class="num">2</span>將來保費</div>
+            <div class="kpi__v" id="kFuture">—</div>
+            <div class="kpi__s" id="kFutureSub"></div>
+          </a>
+          <a class="kpi" href="#secSave">
+            <div class="kpi__q"><span class="num">3</span><span id="kSaveTitle">要儲幾多</span><span class="kpi__tag" id="kSaveTag"></span></div>
+            <div class="kpi__v" id="kSave">—</div>
+            <div class="kpi__s" id="kSaveSub"></div>
+          </a>
+          <a class="kpi kpi--alert" href="#secDelay">
+            <div class="kpi__q"><span class="num">4</span>遲儲嘅代價<span class="kpi__tag" id="kDelayTag"></span></div>
+            <div class="kpi__v" id="kDelay">—</div>
+            <div class="kpi__s" id="kDelaySub"></div>
+          </a>
+        </div>
+
+        <!-- 1 + 2 -->
+        <section class="card" id="secFuture">
+          <header class="card__head">
+            <div>
+              <h2><span class="num">1</span><span class="num">2</span>現時及將來保費</h2>
+              <p class="card__sub" id="futureSub"></p>
+              <p class="card__sub who-line" id="futureWho"></p>
+            </div>
+          </header>
+          <div class="total-hero" id="totalHero"></div>
+          <div class="chart chart--tall"><canvas id="premiumChart" aria-label="逐年保費圖"></canvas></div>
+          <div class="milestones" id="milestones"></div>
+          <div id="growth"></div>
+        </section>
+
+        <!-- 3 -->
+        <section class="card" id="secSave">
+          <header class="card__head">
+            <div>
+              <h2><span class="num">3</span><span id="saveTitle">要儲幾多</span></h2>
+              <p class="card__sub" id="saveSub"></p>
+            </div>
+          </header>
+          <div class="compare" id="compare"></div>
+          <h3 class="mini-title">每月要供幾多、供幾耐</h3>
+          <p class="card__sub">每條柱係嗰一年每月要供嘅錢。柱越高越辛苦，柱越多即係要供越耐。</p>
+          <div class="chart"><canvas id="depositChart" aria-label="每月供款比較圖"></canvas></div>
+          <h3 class="mini-title" id="totalTitle">總共要拎出嚟</h3>
+          <div class="hbars" id="totalBars"></div>
+          <details class="more">
+            <summary>睇儲蓄戶口餘額變化</summary>
+            <p class="card__sub">先儲錢令餘額上升，開始交保費後逐年減少，去到最後一年剛好用晒。</p>
+            <div class="chart"><canvas id="balanceChart" aria-label="儲蓄餘額圖"></canvas></div>
+          </details>
+        </section>
+
+        <!-- 4 -->
+        <section class="card" id="secDelay">
+          <header class="card__head card__head--wrap">
+            <div>
+              <h2><span class="num num--alert">4</span>遲儲嘅代價</h2>
+              <p class="card__sub" id="delaySub"></p>
+            </div>
+            <div class="seg seg--tabs no-print" role="radiogroup" id="delayTabs">
+              <button type="button" role="radio" data-value="plan" aria-checked="true">儲蓄計劃</button>
+              <button type="button" role="radio" data-value="bank" aria-checked="false">銀行儲蓄</button>
+            </div>
+          </header>
+          <div class="delay-lead" id="delayLead"></div>
+          <div class="ladder" id="delayLadder"></div>
+          <p class="hint ladder-note"><span class="key key--base" id="keyBase"></span><span id="keyBaseText">而家開始每月要儲</span>　<span class="key key--extra"></span><span id="keyExtraText">遲咗每月要多儲</span></p>
+          <div class="nosave" id="noSave"></div>
+        </section>
+
+        <!-- 明細 -->
+        <section class="card">
+          <details id="detailBox">
+            <summary><h2>逐年保費明細</h2><span class="card__sub">撳開睇</span></summary>
+            <div id="detailGrowth"></div>
+            <p class="hint" id="detailNote"></p>
+            <div class="table-wrap"><table class="detail" id="detailTable"></table></div>
+          </details>
+        </section>
+
+        <section class="card card--quiet">
+          <h2>計算假設及重要聲明</h2>
+          <ul class="assume" id="assumptions"></ul>
+          <ul class="disclaimer">
+            <li>本工具由 MKPA 製作，作規劃討論用途，並非宏利官方計算工具；實際保費以保險公司發出嘅文件為準。</li>
+            <li>保費表並非保證。保險公司會按當時生效嘅標準保費表，於每次續保時根據受保人年齡調整保費，亦可能向同類保單調整保費表。</li>
+            <li>儲蓄計劃回報及銀行利率均為假設，並非保證；真實儲蓄保險首幾年現金價值一般較低，提早退保可能損失本金，請以產品建議書為準。</li>
+            <li>自願醫保合資格保費扣稅受《稅務條例》規限，每名受保人每年上限 HK$8,000；實際金額以保險公司發出嘅證明為準。</li>
+            <li>標準保費未包括保險業監管局徵收嘅保費徵費，亦未計任何附加保費、折扣或健康獎賞。</li>
+          </ul>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>保費表：<span id="dataInfo"></span></span>
+      <span>&copy; <span id="year"></span> Michael Koo Protection Alliance (MKPA). 版權所有。</span>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="vendor/chart-4.4.1.umd.js"></script>
+  <script src="data/premiums.js"></script>
+  <script src="js/calc.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
