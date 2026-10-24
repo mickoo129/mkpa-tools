@@ -173,7 +173,7 @@ function categoryOf(sleeve, typeEn) {
 async function fetchHtml(url) {
   const res = await fetch(url, {
     headers: {
-      "User-Agent": "Mozilla/5.0 (compatible; MPFCompass/1.0; +https://github.com/mickoo129/mpf-compass)",
+      "User-Agent": "Mozilla/5.0 (compatible; MPFCompass/1.0; +https://github.com/mickoo129/mkpa-tools)",
       Accept: "text/html",
     },
   });

@@ -4,7 +4,7 @@
 
   // The scraper commits fresh data to GitHub every 2 hours. Reading it straight from
   // GitHub means new rates appear without Netlify redeploying; the local copy is a fallback.
-  const REPO_DATA = 'https://raw.githubusercontent.com/mickoo129/bankrate/main/public/data/';
+  const REPO_DATA = 'https://raw.githubusercontent.com/mickoo129/mkpa-tools/main/bankrate/public/data/';
   const LOCAL_DATA = 'data/';
 
   const CCY = [
