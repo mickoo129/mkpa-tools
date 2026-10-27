@@ -1,38 +1,30 @@
-# mkpa-tools
+# mkpa-tools：MKPA 設計標準
 
-MKPA 所有放喺 Netlify 嘅工具／網站，集中喺呢一個 repo。每個子 folder 係一個獨立工具，各自部署做一個 Netlify site（Base directory = 該 folder 名）。
+呢個 repo **只放設計標準**，唔放任何工具代碼，亦唔會部署。每個工具有自己嘅 GitHub repo，各自部署去 Netlify。
 
-## 工具一覽
+**改工具要去該工具自己嘅 repo 改，唔好喺呢度加工具代碼。**（2026 年 10 月曾經將所有工具放喺呢度，已經搬走；舊版本仍然喺 git 歷史入面。）
 
-| Folder | 工具 | 類型 | Netlify 設定 |
-|---|---|---|---|
-| `bankrate/` | 定存息口通：香港銀行定期息口比較 | 純前端 + 爬蟲（自動更新） | Base `bankrate`，其餘由 `netlify.toml` 處理（publish `public`） |
-| `ci-promotion/` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 | Base `ci-promotion`，其餘由 `netlify.toml` 處理 |
-| `claimsreport/` | 七年理賠數據解讀 2019–2025 | 純前端 | Base `claimsreport`，Build command、Publish 留空 |
-| `hk-medical-insurance-compare/` | 醫保對照：自願醫保、危疾及癌症保障比較 | 純前端（單一 `index.html`） | Base `hk-medical-insurance-compare`，其餘留空 |
-| `mpf-compass/` | 積金羅盤：強積金成分基金分析 | React + Vite（要 build，有 SSR functions） | Base `mpf-compass`，其餘由 `netlify.toml` 處理 |
-| `public-rental-housing/` | 公屋全程指南 | 純前端（單一 `index.html`） | Base `public-rental-housing`，其餘留空 |
-| `vhis-rate/` | 自願醫保保費規劃 | 純前端 | Base `vhis-rate`，其餘留空 |
+## 工具 repo 一覽
 
-## 自動更新（GitHub Actions）
+| Repo | 工具 | 類型 |
+|---|---|---|
+| `mickoo129/bankrate` | 定存息口通：香港銀行定期息口比較 | 純前端（`public/`）＋ 爬蟲，GitHub Actions 每 2 小時更新 |
+| `mickoo129/ci-promotion` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 |
+| `mickoo129/claimsreport` | 七年理賠數據解讀 2019–2025 | 純前端 |
+| `mickoo129/hk-medical-insurance-compare` | 醫保對照：自願醫保、危疾及癌症保障比較 | 純前端 |
+| `mickoo129/mpf-compass` | 積金羅盤：強積金成分基金分析 | React + Vite（要 build），GitHub Actions 更新 MPFA 資料 |
+| `mickoo129/public-rental-housing` | 公屋全程指南 | 純前端 |
+| `mickoo129/vhis-rate` | 自願醫保保費規劃 | 純前端 |
 
-Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-directory` 指去對應 folder：
+每個工具 repo 都有自己嘅 CLAUDE.md，指返嚟呢份標準。
 
-- `bankrate-scrape.yml`：每 2 小時抓各銀行息口同匯價，commit 落 `bankrate/public/data/` 同 `bankrate/debug/`。Commit message 帶 `[skip netlify]`，因為網站直接由 GitHub raw 讀數據，唔使重新部署。
-- `mpf-compass-refresh.yml`：星期一至六更新 MPFA 基金資料，commit 落 `mpf-compass/src/`，會觸發 `mpf-compass` 重新部署。
+## 所有工具都要遵守
 
-呢啲由 bot commit 嘅數據檔，除非我明確要求，否則唔好手動改。
-
-## 修改工具時必須遵守
-
-1. **只改指定嘅 folder**：改 `bankrate` 時唔好掂其他工具，除非我明確要求。
-2. **保留每個 folder 嘅 `netlify.toml` 入面 `ignore` 嗰行**：佢令 Netlify 只喺該 folder 有改動時先重新部署，否則改一個工具會令全部工具重建。
-3. **檔案路徑唔好超出自己個 folder**：Netlify 只會發佈該 folder 入面嘅檔案，所以唔可以用 `../` 引用其他 folder 嘅檔案。共用資源要用完整網址。
-4. **語言**：介面文字用繁體中文（香港用語），`<html lang="zh-HK">`（或 `zh-Hant-HK`）。
-5. **手機優先**：必須喺手機闊度（約 375px）正常顯示，唔可以出現橫向捲動。
-6. **純前端工具保持純前端**：唔好為純前端工具加入 build 步驟或 npm 依賴。
-7. **唔好放任何密碼、API key 落 repo**（呢個 repo 係公開嘅）。
-8. **Commit message** 開頭寫 folder 名，例如 `vhis-rate: 修正保費計算`。
+1. 介面文字用繁體中文（香港用語），`<html lang="zh-HK">`（或 `zh-Hant-HK`）。
+2. 手機優先：手機闊度（約 375px）正常顯示，唔可以出現橫向捲動。
+3. 純前端工具保持純前端，唔好加 build 步驟或 npm 依賴。
+4. 唔好放任何密碼、API key 落 repo。
+5. 改嘢之前一定用 repo 最新版本做底，唔好用對話記憶入面嘅舊代碼覆蓋。
 
 ## 設計規格（MKPA 統一標準）
 
@@ -41,7 +33,7 @@ Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-dire
 **標準檔案喺 `_standard/`**（唔會部署，只係範本）：
 - `_standard/mkpa.css`：配色變數、電子名片、列印按鈕、列印頁頭嘅樣式。複製入工具嘅 CSS。
 - `_standard/snippets.html`：字體連結、列印頁頭、列印按鈕、電子名片（連二維碼）、版權行、年份／列印日期 script。
-- 改標準時先改 `_standard/`，再同步到每個工具。React 工具（mpf-compass）用 `src/components/layout/mk-standard.tsx`。
+- 改標準時先改呢度，再逐個工具 repo 同步。React 工具（mpf-compass）用佢 repo 入面嘅 `src/components/layout/mk-standard.tsx`。
 
 ### 配色
 
@@ -105,8 +97,8 @@ Workflow 一定要放喺 repo 根目錄 `.github/workflows/`，用 `working-dire
 
 ## 新增工具
 
-1. 開新 folder（英文細楷加連字號，例如 `price-calculator`）。
-2. 寫 `index.html`，跟上面規則同設計規格（配色、字體、頁尾、列印）。
-3. 複製任何一個純前端工具嘅 `netlify.toml`（只有 `ignore` 嗰行）放入新 folder。
-4. 喺上面「工具一覽」加一行。
-5. 喺 Netlify 新增 site，揀呢個 repo，Base directory 填該 folder 名。
+1. 喺 GitHub 開一個新 repo（英文細楷加連字號，例如 `price-calculator`）。
+2. 寫 `index.html`，跟上面設計規格（配色、字體、頁尾、列印），由 `_standard/` 複製樣式同片段。
+3. 喺新 repo 加一份 CLAUDE.md，格式參考其他工具 repo（指返呢份標準 ＋ 該工具嘅特別嘢）。
+4. 喺上面「工具 repo 一覽」加一行。
+5. 喺 Netlify 新增 site，連去新 repo。
