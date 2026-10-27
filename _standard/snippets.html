@@ -1,7 +1,16 @@
-<!-- ===== 1. 放喺 <head>：字體 ===== -->
+<!-- ===== 1. 放喺 <head>：icon + 字體 ===== -->
+<!-- icon 檔案用 _standard/make-icons.py 產生，放喺網頁同一個 folder -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0E5E57">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=Noto+Sans+HK:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<!-- ===== 1b. 標題旁 icon（同瀏覽器分頁用同一個 favicon.svg）===== -->
+<!-- <a class="brand"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32">工具名稱</a> -->
 
 <!-- ===== 2. 放喺 <body> 最頂：列印版頁頭（只喺列印時顯示）===== -->
 <div class="mk-print-head"><b>MKPA · 【工具名稱】</b><span>列印日期：<span class="mk-print-date"></span></span></div>

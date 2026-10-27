@@ -32,7 +32,8 @@
 
 **標準檔案喺 `_standard/`**（唔會部署，只係範本）：
 - `_standard/mkpa.css`：配色變數、電子名片、列印按鈕、列印頁頭嘅樣式。複製入工具嘅 CSS。
-- `_standard/snippets.html`：字體連結、列印頁頭、列印按鈕、電子名片（連二維碼）、版權行、年份／列印日期 script。
+- `_standard/snippets.html`：icon 連結、字體連結、列印頁頭、列印按鈕、電子名片（連二維碼）、版權行、年份／列印日期 script。
+- `_standard/make-icons.py` 同 `_standard/icons/`：產生工具 icon（見下面「Icon」）。
 - 改標準時先改呢度，再逐個工具 repo 同步。React 工具（mpf-compass）用佢 repo 入面嘅 `src/components/layout/mk-standard.tsx`。
 
 ### 配色
@@ -56,6 +57,37 @@
 - 圖表需要多個分類顏色時可以加其他顏色，但主系列用宏利綠。
 - **唔做深色模式**，唔好加 `prefers-color-scheme: dark` 或主題切換掣。
 - 例外：mpf-compass 整體用深青綠 `#0E5E57` 做頁面底色（白色卡片放上面），列印時自動轉白底黑字。
+
+### 版面闊度
+
+- 內容最闊 **1320px**，兩邊留白 `clamp(16px, 3vw, 32px)`（手機約 16px、平板約 24px、桌面 32px）。
+- 用 `_standard/mkpa.css` 嘅 `--mk-max`、`--mk-gutter` 或 `.mk-wrap`；工具自己嘅外框 class 都要用同樣數值。
+- 例外：一大段文字可以自己限闊（約 720px）方便閱讀；簡報式頁面（例如 ci-promotion 嘅講解簡報）按簡報比例縮放。
+- 手機（375px）、平板（768–1024px）都唔可以橫向捲動。
+
+### Icon（每個工具都要有）
+
+- 每個工具有一個簡單單色 icon：**宏利綠 `#00A758` 圓角方塊 + 白色線條圖形**（32×32 網格、線粗 2.5、圓角端）。
+- 用 `_standard/make-icons.py` 產生全套檔案，唔好自己畫唔同風格：
+  ```
+  python3 _standard/make-icons.py <圖形> <工具網頁 folder> --name "工具全名" --short "短名"
+  ```
+  現成圖形喺 `_standard/icons/`；新工具可以照格式加一個新圖形。
+- 產生嘅檔案同用途：
+  - `favicon.svg`、`favicon.ico`：瀏覽器分頁
+  - `apple-touch-icon.png`：iPhone／iPad「加至主畫面」
+  - `icon-192.png`、`icon-512.png`、`site.webmanifest`：Android／Chrome「加至主畫面」或「安裝」
+- `<head>` 要有 `_standard/snippets.html` 第 1 段嘅 icon 連結；標題旁邊用 `<img class="mk-logo" src="favicon.svg">` 顯示同一個 icon。
+
+| 工具 | 圖形 |
+|---|---|
+| bankrate | `trend-up` |
+| ci-promotion | `pulse` |
+| claimsreport | `shield-check` |
+| hk-medical-insurance-compare | `shield-plus` |
+| mpf-compass | `compass` |
+| public-rental-housing | `house` |
+| vhis-rate | `medical-cross` |
 
 ### 字體
 
@@ -98,7 +130,8 @@
 ## 新增工具
 
 1. 喺 GitHub 開一個新 repo（英文細楷加連字號，例如 `price-calculator`）。
-2. 寫 `index.html`，跟上面設計規格（配色、字體、頁尾、列印），由 `_standard/` 複製樣式同片段。
-3. 喺新 repo 加一份 CLAUDE.md，格式參考其他工具 repo（指返呢份標準 ＋ 該工具嘅特別嘢）。
-4. 喺上面「工具 repo 一覽」加一行。
-5. 喺 Netlify 新增 site，連去新 repo。
+2. 寫 `index.html`，跟上面設計規格（版面闊度、icon、配色、字體、頁尾、列印），由 `_standard/` 複製樣式同片段。
+3. 揀或者畫一個圖形，用 `_standard/make-icons.py` 產生 icon，並喺上面 icon 表加一行。
+4. 喺新 repo 加一份 CLAUDE.md，格式參考其他工具 repo（指返呢份標準 ＋ 該工具嘅特別嘢）。
+5. 喺上面「工具 repo 一覽」加一行。
+6. 喺 Netlify 新增 site，連去新 repo。
