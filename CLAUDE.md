@@ -78,6 +78,7 @@
   - `apple-touch-icon.png`：iPhone／iPad「加至主畫面」
   - `icon-192.png`、`icon-512.png`、`site.webmanifest`：Android／Chrome「加至主畫面」或「安裝」
 - `<head>` 要有 `_standard/snippets.html` 第 1 段嘅 icon 連結；標題旁邊用 `<img class="mk-logo" src="favicon.svg">` 顯示同一個 icon。
+- 標題旁 icon 大細跟頁頭標題高度調整，大約 **24–40px**（`.mk-logo` 預設 32px）：頁頭窄就細啲，標題加副標題兩行字就大啲。唔使硬性統一做 32px。
 
 | 工具 | 圖形 |
 |---|---|
