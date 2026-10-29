@@ -59,3 +59,18 @@ function mkToast(msg){var t=document.createElement('div');t.className='mk-toast'
 document.querySelectorAll('.mk-year').forEach(function(e){e.textContent=d.getFullYear();});
 document.querySelectorAll('.mk-print-date').forEach(function(e){e.textContent=d.getFullYear()+' 年 '+(d.getMonth()+1)+' 月 '+d.getDate()+' 日';});})();
 </script>
+
+<!-- ===== 7. 分類色盤（圖表用；同 mkpa.css 嘅 --mk-cat-1…8 一樣）===== -->
+<!-- 固定意思：1 醫療／住院、2 危疾、3 人壽／身故、4 意外、5 癌症、6 儲蓄／退休／強積金、7 中性／其他、8 後備 -->
+<script>
+const MK_CAT = [
+  { color: '#2A78D6', ink: '#2873CE', soft: '#E7EFF9' },  // 1 醫療／住院
+  { color: '#6250D6', ink: '#6250D6', soft: '#E9E7F9' },  // 2 危疾
+  { color: '#EB6834', ink: '#C94714', soft: '#F9ECE7' },  // 3 人壽／身故
+  { color: '#0E9AA7', ink: '#0C808B', soft: '#E7F7F9' },  // 4 意外
+  { color: '#C2417A', ink: '#C2417A', soft: '#F8E8EF' },  // 5 癌症
+  { color: '#C99A2E', ink: '#8F6D21', soft: '#F9F3E7' },  // 6 儲蓄／退休／強積金
+  { color: '#5B7086', ink: '#5B7086', soft: '#EDF0F3' },  // 7 中性／其他
+  { color: '#8A5A44', ink: '#8A5A44', soft: '#F5EEEB' },  // 8 第8色
+];
+</script>
