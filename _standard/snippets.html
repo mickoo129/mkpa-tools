@@ -15,8 +15,21 @@
 <!-- ===== 2. 放喺 <body> 最頂：列印版頁頭（只喺列印時顯示）===== -->
 <div class="mk-print-head"><b>MKPA · 【工具名稱】</b><span>列印日期：<span class="mk-print-date"></span></span></div>
 
-<!-- ===== 3. 列印按鈕（放喺工具列／頁頭）===== -->
-<button type="button" class="mk-print-btn" onclick="window.print()">列印 / 存 PDF</button>
+<!-- ===== 2b. 頁頭：鎖住喺頂。第一行 icon + 工具名 + 按鈕；唔放副名 ===== -->
+<!-- 分頁／導覽可以放第二行（手機一行過、左右捲動） -->
+<header class="mk-header">
+  <div class="mk-wrap mk-bar">
+    <a class="mk-title" href="./"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span>工具名稱</span></a>
+    <div class="mk-actions">
+      <!-- 有為客人揀嘅設定先放分享掣 -->
+      <button type="button" class="mk-share-btn" onclick="mkShare()">分享<span class="mk-long">呢個方案</span></button>
+      <button type="button" class="mk-print-btn" onclick="window.print()">列印<span class="mk-long"> / 存 PDF</span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== 3. 列印按鈕（已包喺上面頁頭；其他位置都可以用）===== -->
+<button type="button" class="mk-print-btn" onclick="window.print()">列印<span class="mk-long"> / 存 PDF</span></button>
 
 <!-- ===== 4. 放喺頁尾之前：電子名片（列印時自動變二維碼）===== -->
 <div class="mk-ecard">
@@ -29,6 +42,18 @@
 <p class="mk-copy">© <span class="mk-year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p>
 
 <!-- ===== 6. 放喺 </body> 之前 ===== -->
+<script>
+/* 分享呢個方案：手機彈出分享選單（WhatsApp 等），電腦複製連結。
+   url 要包括客人揀嘅設定（例如放喺 # 後面），但唔可以包括客人姓名。 */
+function mkShare(url){
+  url=url||location.href;
+  if(navigator.share&&matchMedia('(pointer:coarse)').matches){navigator.share({title:document.title,url:url}).catch(function(){});return;}
+  (navigator.clipboard?navigator.clipboard.writeText(url):Promise.reject()).then(
+    function(){mkToast('已複製連結，客人撳開會見到同一個方案');},
+    function(){window.prompt('複製呢條連結：',url);});
+}
+function mkToast(msg){var t=document.createElement('div');t.className='mk-toast';t.setAttribute('role','status');t.textContent=msg;(document.querySelector('dialog[open]')||document.body).appendChild(t);setTimeout(function(){t.remove();},2400);}
+</script>
 <script>
 (function(){var d=new Date();
 document.querySelectorAll('.mk-year').forEach(function(e){e.textContent=d.getFullYear();});
