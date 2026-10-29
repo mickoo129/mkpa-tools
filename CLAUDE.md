@@ -13,6 +13,7 @@
 | `mickoo129/claimsreport` | 七年理賠數據解讀 2019–2025 | 純前端 |
 | `mickoo129/hk-hospitals` | 香港醫院指南：公立、私家醫院、專科及急症搜尋 | 純前端 ＋ 一個 Netlify Function（急症室即時等候時間） |
 | `mickoo129/hk-medical-insurance-compare` | 醫保對照：自願醫保、危疾及癌症保障比較 | 純前端 |
+| `mickoo129/oala` | 長者生活津貼全程指南 | 純前端 |
 | `mickoo129/mpf-compass` | 積金羅盤：強積金成分基金分析 | React + Vite（要 build），GitHub Actions 更新 MPFA 資料 |
 | `mickoo129/public-rental-housing` | 公屋全程指南 | 純前端 |
 | `mickoo129/vhis-rate` | 自願醫保保費規劃 | 純前端 |
@@ -90,6 +91,7 @@
 | hk-hospitals | `pin-plus` |
 | hk-medical-insurance-compare | `shield-plus` |
 | mpf-compass | `compass` |
+| oala | `elder-cane` |
 | public-rental-housing | `house` |
 | vhis-rate | `medical-cross` |
 
