@@ -16,10 +16,15 @@
 <div class="mk-print-head"><b>MKPA · 【工具名稱】</b><span>列印日期：<span class="mk-print-date"></span></span></div>
 
 <!-- ===== 2b. 頁頭：鎖住喺頂。第一行 icon + 工具名（下面細字簡介，15 字以內、唔用句號）+ 按鈕 ===== -->
-<!-- 分頁／導覽可以放第二行（手機一行過、左右捲動） -->
+<!-- 樣式跟 claimsreport：淺色底；分頁掣喺工具名右邊，手機落第二行左右捲動 -->
 <header class="mk-header">
   <div class="mk-wrap mk-bar">
     <a class="mk-title" href="./"><img class="mk-logo" src="favicon.svg" alt="" width="32" height="32"><span class="mk-name">工具名稱<small class="mk-sub">一句工具簡介</small></span></a>
+    <!-- 有分頁先放：放喺工具名右邊（手機自動落第二行），每粒用 .mk-tab + .mk-cat-N；冇分頁就刪走成個 nav -->
+    <nav class="mk-tabs" aria-label="分頁">
+      <a class="mk-tab mk-cat-1 on" href="#a">分頁一</a>
+      <a class="mk-tab mk-cat-2" href="#b">分頁二</a>
+    </nav>
     <div class="mk-actions">
       <!-- 有為客人揀嘅設定先放分享掣 -->
       <button type="button" class="mk-share-btn" onclick="mkShare()">分享<span class="mk-long">呢個方案</span></button>
