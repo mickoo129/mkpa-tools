@@ -37,6 +37,7 @@
 - `_standard/mkpa.css`：配色變數、分類色盤、電子名片、列印按鈕、列印頁頭嘅樣式。複製入工具嘅 CSS。
 - `_standard/snippets.html`：icon 連結、字體連結、列印頁頭、列印按鈕、電子名片（連二維碼）、版權行、年份／列印日期 script。
 - `_standard/make-icons.py` 同 `_standard/icons/`：產生工具 icon（見下面「Icon」）。
+- `_standard/CLAUDE-template.md`：新工具 repo 嘅 CLAUDE.md 範本。改標準重點時要連範本一齊改。
 - 改標準時先改呢度，再逐個工具 repo 同步。React 工具（mpf-compass）用佢 repo 入面嘅 `src/components/layout/mk-standard.tsx`。
 
 ### 配色
@@ -184,8 +185,8 @@
 ## 新增工具
 
 1. 喺 GitHub 開一個新 repo（英文細楷加連字號，例如 `price-calculator`）。
-2. 寫 `index.html`，跟上面設計規格（版面闊度、icon、配色、字體、頁尾、列印），由 `_standard/` 複製樣式同片段。
+2. 寫 `index.html`，跟上面設計規格（頁頭、版面闊度、icon、配色、三級用色、字體、頁尾、列印、分享），由 `_standard/` 複製樣式同片段。
 3. 揀或者畫一個圖形，用 `_standard/make-icons.py` 產生 icon，並喺上面 icon 表加一行。
-4. 喺新 repo 加一份 CLAUDE.md，格式參考其他工具 repo（指返呢份標準 ＋ 該工具嘅特別嘢）。
+4. 喺新 repo 加 CLAUDE.md：複製 `_standard/CLAUDE-template.md`，填好【】入面嘅嘢（工具名、圖形、特別嘢、屬三級用色邊一級）。
 5. 喺上面「工具 repo 一覽」加一行。
 6. 喺 Netlify 新增 site，連去新 repo。
