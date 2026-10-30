@@ -8,7 +8,7 @@
 
 | Repo | 工具 | 類型 |
 |---|---|---|
-| `mickoo129/mkpa-home` | MKPA 工具箱（主頁，自動讀 `tools.json` 列出所有工具） | 純前端 |
+| `mickoo129/mkpa-home` | MKPA 工具箱（主頁 https://mkpa.netlify.app/，自動讀 `tools.json` 列出所有工具） | 純前端 |
 | `mickoo129/bankrate` | 定存息口通：香港銀行定期息口比較 | 純前端（`public/`）＋ 爬蟲，GitHub Actions 每 2 小時更新 |
 | `mickoo129/ci-promotion` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 |
 | `mickoo129/claimsreport` | 七年理賠數據解讀 2019–2025 | 純前端 |
@@ -162,7 +162,7 @@
 
 ### 頁尾（每個工具一樣）
 
-由上至下：工具專屬免責聲明 → 資料來源（如有）→ 電子名片 → 版權。
+由上至下：工具專屬免責聲明 → 資料來源（如有）→ 電子名片 → MKPA 工具箱連結 → 版權。
 
 ```html
 <footer class="mk-footer">
@@ -171,6 +171,7 @@
     <a href="https://api.portfoplus.com/api/v1/adviser/5e41564ab3b1bc00153394db?m=link&amp;r=adviser" target="_blank" rel="noopener">查看電子名片 →</a>
     <span>可直接 WhatsApp、加 IG 或儲存聯絡資料</span>
   </p>
+  <p class="mk-home-link"><a href="https://mkpa.netlify.app/" target="_blank" rel="noopener">MKPA 工具箱：睇其他實用工具 ↗</a></p>
   <p class="mk-copy">© <span class="mk-year">2026</span> Michael Koo Protection Alliance (MKPA). 版權所有。</p>
 </footer>
 <script>document.querySelectorAll('.mk-year').forEach(e=>e.textContent=new Date().getFullYear());</script>
@@ -178,6 +179,7 @@
 
 - **聯絡資料只用電子名片連結**，唔好喺工具顯示電話、WhatsApp 號碼、電郵、牌照號碼，亦唔好加顧問資料輸入欄。
 - 「分享去 WhatsApp」呢類分享功能可以保留，佢唔係聯絡資料。
+- **MKPA 工具箱連結**（`.mk-home-link`）：主頁 `https://mkpa.netlify.app/`，一定開新分頁（`target="_blank"`），列印唔印。只放頁尾；頁頭標題旁嘅 icon 照舊返自己工具最頂，唔好改做去主頁。
 
 ### 列印／存 PDF（每個工具都要有）
 
