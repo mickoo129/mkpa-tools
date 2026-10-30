@@ -38,7 +38,7 @@
     },
     {
       "id": "claimsreport",
-      "name": "七年理賠數據解讀",
+      "name": "理賠數據解讀",
       "sub": "2019–2025 個人保險賠償數據",
       "desc": "用 2019–2025 年賠償數據，睇醫療、危疾、人壽、意外四類保險實際賠咗幾多。",
       "url": "https://claims-report.netlify.app/",

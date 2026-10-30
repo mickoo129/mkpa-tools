@@ -11,7 +11,7 @@
 | `mickoo129/mkpa-home` | MKPA 工具箱（主頁 https://mkpa.netlify.app/，自動讀 `tools.json` 列出所有工具） | 純前端 |
 | `mickoo129/bankrate` | 定存息口通：香港銀行定期息口比較 | 純前端（`public/`）＋ 爬蟲，GitHub Actions 每 2 小時更新 |
 | `mickoo129/ci-promotion` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 |
-| `mickoo129/claimsreport` | 七年理賠數據解讀 2019–2025 | 純前端 |
+| `mickoo129/claimsreport` | 理賠數據解讀 2019–2025 | 純前端 |
 | `mickoo129/hk-hospitals` | 香港醫院指南：公立、私家醫院、專科及急症搜尋 | 純前端 ＋ 一個 Netlify Function（急症室即時等候時間） |
 | `mickoo129/hk-medical-insurance-compare` | 醫保對照：自願醫保、危疾及癌症保障比較 | 純前端 |
 | `mickoo129/oala` | 長者生活津貼全程指南 | 純前端 |
