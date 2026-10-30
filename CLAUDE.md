@@ -8,6 +8,7 @@
 
 | Repo | 工具 | 類型 |
 |---|---|---|
+| `mickoo129/mkpa-home` | MKPA 工具箱（主頁，自動讀 `tools.json` 列出所有工具） | 純前端 |
 | `mickoo129/bankrate` | 定存息口通：香港銀行定期息口比較 | 純前端（`public/`）＋ 爬蟲，GitHub Actions 每 2 小時更新 |
 | `mickoo129/ci-promotion` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 |
 | `mickoo129/claimsreport` | 七年理賠數據解讀 2019–2025 | 純前端 |
@@ -19,6 +20,8 @@
 | `mickoo129/vhis-rate` | 自願醫保保費規劃 | 純前端 |
 
 每個工具 repo 都有自己嘅 CLAUDE.md，指返嚟呢份標準。
+
+**`tools.json`**：所有工具嘅名、簡介、網址、分組。主頁（mkpa-home）自動讀呢個檔案，所以**加新工具、改網址或者想喺主頁隱藏某個工具，只要改 `tools.json`**（`show: false` 就唔顯示）。改網址（例如換自訂網域）都要改呢度。
 
 ## 所有工具都要遵守
 
@@ -86,6 +89,7 @@
 
 | 工具 | 圖形 |
 |---|---|
+| mkpa-home | `apps` |
 | bankrate | `trend-up` |
 | ci-promotion | `pulse` |
 | claimsreport | `shield-check` |
@@ -188,5 +192,5 @@
 2. 寫 `index.html`，跟上面設計規格（頁頭、版面闊度、icon、配色、三級用色、字體、頁尾、列印、分享），由 `_standard/` 複製樣式同片段。
 3. 揀或者畫一個圖形，用 `_standard/make-icons.py` 產生 icon，並喺上面 icon 表加一行。
 4. 喺新 repo 加 CLAUDE.md：複製 `_standard/CLAUDE-template.md`，填好【】入面嘅嘢（工具名、圖形、特別嘢、屬三級用色邊一級）。
-5. 喺上面「工具 repo 一覽」加一行。
+5. 喺上面「工具 repo 一覽」加一行，同埋喺 `tools.json` 加一項（名、簡介、一句描述、Netlify 網址、分組）；主頁會自動顯示。
 6. 喺 Netlify 新增 site，連去新 repo。

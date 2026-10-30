@@ -1,0 +1,19 @@
+{
+  "_說明": "MKPA 工具清單。主頁（mkpa-home）會自動讀呢個檔案顯示所有工具。加新工具時喺 tools 加一項；show 設 false 就唔會喺主頁出現（例如顧問自用工具）。group 用下面 groups 嘅 id。",
+  "groups": [
+    { "id": "insurance", "name": "保險及醫療", "cat": 1 },
+    { "id": "money", "name": "理財及強積金", "cat": 5 },
+    { "id": "welfare", "name": "政府福利及房屋", "cat": 7 }
+  ],
+  "tools": [
+    { "id": "hk-medical-insurance-compare", "name": "醫保對照", "sub": "自願醫保、危疾及癌症保障比較", "desc": "比較十間保險公司嘅自願醫保、危疾同癌症保障，可以並排比較同分享方案。", "url": "https://hkmedical-insurance.netlify.app/", "group": "insurance", "show": true },
+    { "id": "vhis-rate", "name": "自願醫保保費規劃", "sub": "宏利自願醫保現時及將來保費", "desc": "睇清楚而家同將來每年保費、要預留幾多，同遲啲準備嘅代價。", "url": "https://vhis-rate.netlify.app/", "group": "insurance", "show": true },
+    { "id": "claimsreport", "name": "七年理賠數據解讀", "sub": "2019–2025 個人保險賠償數據", "desc": "用 2019–2025 年賠償數據，睇醫療、危疾、人壽、意外四類保險實際賠咗幾多。", "url": "https://claims-report.netlify.app/", "group": "insurance", "show": true },
+    { "id": "hk-hospitals", "name": "香港醫院指南", "sub": "公立、私家醫院、專科及急症搜尋", "desc": "全港公立同私家醫院一覽，按地區、專科篩選，仲有急症室即時等候時間。", "url": "https://hospitalinfohk.netlify.app/", "group": "insurance", "show": true },
+    { "id": "mpf-compass", "name": "積金羅盤", "sub": "強積金成分基金分析及比較", "desc": "全港強積金成分基金比較、健康檢查同參考配置，數據來自積金局。", "url": "https://mpf-compass.netlify.app/", "group": "money", "show": true },
+    { "id": "bankrate", "name": "定存息口通", "sub": "香港銀行定期息口及匯價比較", "desc": "自動更新 20 多間銀行嘅定期息口同匯價，一眼睇邊間最高息。", "url": "https://bankratehk.netlify.app/", "group": "money", "show": true },
+    { "id": "oala", "name": "長者生活津貼全程指南", "sub": "長生津資格、申請及覆檢一覽", "desc": "長生津申請資格、入息資產限額、申請流程同覆檢，仲可以快速計算。", "url": "https://oalahk.netlify.app/", "group": "welfare", "show": true },
+    { "id": "public-rental-housing", "name": "公屋全程指南", "sub": "由申請、輪候到上樓及申報", "desc": "由申請公屋、輪候、上樓，到住戶定期申報嘅完整流程。", "url": "https://prhhk.netlify.app/", "group": "welfare", "show": true },
+    { "id": "ci-promotion", "name": "危疾定義更新計劃", "sub": "宏利舊單升級新危疾定義", "desc": "顧問自用。", "url": "https://ci-promotion.netlify.app/", "group": "insurance", "show": false }
+  ]
+}
