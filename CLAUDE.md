@@ -12,6 +12,7 @@
 | `mickoo129/bankrate` | 定存息口通：香港銀行定期息口比較 | 純前端（`public/`）＋ 爬蟲，GitHub Actions 每 2 小時更新 |
 | `mickoo129/ci-promotion` | 危疾定義更新計劃（顧問自用，noindex） | 純前端 |
 | `mickoo129/claimsreport` | 理賠數據解讀 2019–2025 | 純前端 |
+| `mickoo129/elderly-housing-calc` | 長者公屋＋長生津計算機：一次過睇長生津同公屋資格（三個情況） | 純前端 |
 | `mickoo129/hk-hospitals` | 香港醫院指南：公立、私家醫院、專科及急症搜尋 | 純前端 ＋ 一個 Netlify Function（急症室即時等候時間） |
 | `mickoo129/hk-medical-insurance-compare` | 醫保對照：自願醫保、危疾及癌症保障比較 | 純前端 |
 | `mickoo129/oala` | 長者生活津貼全程指南 | 純前端 |
@@ -101,6 +102,7 @@
 | bankrate | `trend-up` |
 | ci-promotion | `pulse` |
 | claimsreport | `shield-check` |
+| elderly-housing-calc | `house-check` |
 | hk-hospitals | `pin-plus` |
 | hk-medical-insurance-compare | `shield-plus` |
 | mpf-compass | `compass` |

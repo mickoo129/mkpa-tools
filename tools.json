@@ -91,6 +91,15 @@
       "show": true
     },
     {
+      "id": "elderly-housing-calc",
+      "name": "長者公屋＋長生津計算機",
+      "sub": "一次過看長生津及公屋資格",
+      "desc": "長者住公屋申請長生津、領長生津申請公屋，或兩樣都有要申報覆檢，一次過睇兩邊合唔合資格同差幾多。",
+      "url": "https://elderly-housing-calc.netlify.app/",
+      "group": "welfare",
+      "show": false
+    },
+    {
       "id": "ci-promotion",
       "name": "危疾定義更新計劃",
       "sub": "宏利舊單升級新危疾定義",
