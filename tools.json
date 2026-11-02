@@ -97,7 +97,7 @@
       "desc": "長者住公屋申請長生津、領長生津申請公屋，或兩樣都有要申報覆檢，一次過睇兩邊合唔合資格同差幾多。",
       "url": "https://elderly-housing-calc.netlify.app/",
       "group": "welfare",
-      "show": false
+      "show": true
     },
     {
       "id": "ci-promotion",
