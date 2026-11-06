@@ -56,7 +56,7 @@ def main():
     p = a.prefix
     manifest = {
         "name": a.name, "short_name": a.short, "lang": "zh-HK",
-        "start_url": ".", "display": "standalone",
+        "start_url": ".", "display": "browser",
         "background_color": BG, "theme_color": DEEP,
         "icons": [
             {"src": f"{p}icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},

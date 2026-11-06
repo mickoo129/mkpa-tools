@@ -205,6 +205,9 @@
 - 紙張 A4；直向或橫向按內容決定（闊表格用橫向）。
 - 列印時：隱藏導覽、按鈕、輸入提示等互動元素；保留顏色（`print-color-adjust: exact`）；卡片、表格行唔好斷頁（`break-inside: avoid`）。
 - 列印版頂部顯示工具名稱同列印日期，底部顯示電子名片連結同版權行（PDF 入面條連結撳得到）。
+- **手機列印**：iPhone 由主畫面 icon 以 app 模式開、或者喺 WhatsApp／IG／Facebook／微信等 app 內置瀏覽器開，`window.print()` 冇反應。所以：
+  - `site.webmanifest` 一律用 `"display": "browser"`（主畫面 icon 喺 Safari／Chrome 開），唔好用 `standalone`；唔好加 `apple-mobile-web-app-capable`。
+  - 每個工具 `</body>` 之前要有 `_standard/snippets.html` 第 6b 段「列印保護」：喺上面兩種情況撳 `.mk-print-btn` 會顯示提示同「複製連結」，叫用家用 Safari／Chrome 開再印。列印掣一定要有 `mk-print-btn` class。
 
 ## 新增工具
 
