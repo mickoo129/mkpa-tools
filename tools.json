@@ -73,6 +73,15 @@
       "show": true
     },
     {
+      "id": "finacial-planning",
+      "name": "理財需求分析",
+      "sub": "四桶金理財檢查及行動清單",
+      "desc": "用互動情景同「四桶金」理財金字塔，檢查應急錢、保障、退休同增值，再整理優先行動清單。",
+      "url": "https://finacial-planning.netlify.app/",
+      "group": "money",
+      "show": false
+    },
+    {
       "id": "oala",
       "name": "長者生活津貼全程指南",
       "sub": "長生津資格、申請及覆檢一覽",
