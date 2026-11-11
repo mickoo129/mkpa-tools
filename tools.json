@@ -79,7 +79,7 @@
       "desc": "用互動情景同「四桶金」理財金字塔，檢查應急錢、保障、退休同增值，再整理優先行動清單。",
       "url": "https://finacial-planning.netlify.app/",
       "group": "money",
-      "show": false
+      "show": true
     },
     {
       "id": "oala",
